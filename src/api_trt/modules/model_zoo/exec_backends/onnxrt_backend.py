@@ -9,7 +9,7 @@ class Arcface:
                  input_mean: float = 0.,
                  input_std: float = 1.,
                  **kwargs):
-        self.rec_model = onnxruntime.InferenceSession(rec_name)
+        self.rec_model = onnxruntime.InferenceSession(rec_name, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
         self.input_mean = input_mean
         self.input_std = input_std
         self.outputs = [e.name for e in self.rec_model.get_outputs()]
@@ -36,7 +36,7 @@ class Arcface:
 class FaceGenderage:
 
     def __init__(self, rec_name='/models/onnx/genderage_v1/genderage_v1.onnx', outputs=None, **kwargs):
-        self.rec_model = onnxruntime.InferenceSession(rec_name)
+        self.rec_model = onnxruntime.InferenceSession(rec_name, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
         self.input = self.rec_model.get_inputs()[0]
         if outputs is None:
             outputs = [e.name for e in self.rec_model.get_outputs()]
@@ -77,7 +77,7 @@ class FaceGenderage:
 class MaskDetection:
 
     def __init__(self, rec_name='/models/onnx/genderage_v1/genderage_v1.onnx', outputs=None, **kwargs):
-        self.rec_model = onnxruntime.InferenceSession(rec_name)
+        self.rec_model = onnxruntime.InferenceSession(rec_name, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
         self.input = self.rec_model.get_inputs()[0]
         if outputs is None:
             outputs = [e.name for e in self.rec_model.get_outputs()]
